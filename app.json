@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rn-context-reducer-memo-demo",
-    "slug": "rn-context-reducer-memo-demo",
+    "name": "decentralizedmessageapp",
+    "slug": "decentralizedmessageapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
