@@ -9,26 +9,17 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 declare global {
   namespace ReactNavigation {
-    interface AuthParamList extends RootStackParamList {}
+    interface RootParmList extends RootStackParamList {}
+    interface AuthParamList extends AuthStackParamList {}
   }
 }
 
 export type RootStackParamList = {
-  Auth: NavigatorScreenParams<AuthStackParamList> | undefined;
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
-  Modal: undefined;
-  NotFound: undefined;
-};
-
-export type AuthStackScreenProps<Screen extends keyof AuthStackParamList> = NativeStackScreenProps<
-  AuthStackParamList,
-  Screen
->;
-
-export type AuthStackParamList = {
-  OnBoarding: undefined;
-  Login: undefined;
-  Register: undefined;
+  Profile: undefined;
+  Messages: undefined;
+  Moments: undefined;
+  Settings: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
@@ -36,14 +27,34 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> = Nati
   Screen
 >;
 
-export type RootTabParamList = {
-  ProfileScreen: undefined;
-  MessagesScreen: undefined;
-  MomentsScreen: undefined;
-  SettingsScreen: undefined;
+export type AuthStackParamList = {
+  Auth: NavigatorScreenParams<AuthNavParamList> | undefined;
+  // OnBoarding: undefined;
+  // Login: undefined;
+  // Register: undefined;
+  Modal: undefined,
+  NotFound: undefined,
 };
 
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
-  BottomTabScreenProps<RootTabParamList, Screen>,
-  NativeStackScreenProps<RootStackParamList>
+export type AuthStackScreenProps<Screen extends keyof AuthStackParamList> = NativeStackScreenProps<
+  AuthStackParamList,
+  Screen
 >;
+
+export type RootTabParamList = {
+  Profile: undefined;
+  Messages: undefined;
+  Moments: undefined;
+  Settings: undefined;
+};
+
+export type AuthNavParamList = {
+  OnBoarding: undefined;
+  Login: undefined;
+  Register: undefined
+};
+
+// export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
+//   BottomTabScreenProps<RootTabParamList, Screen>,
+//   NativeStackScreenProps<RootStackParamList>
+// >;

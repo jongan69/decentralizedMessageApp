@@ -15,23 +15,17 @@ const linking: LinkingOptions<RootStackParamList | AuthStackParamList> = {
     screens: {
       Auth: {
         screens: {
-          OnBoarding: 'onBoarding',
-          Login: 'Register',
-          Register: 'Login',
+          OnBoarding: 'OnBoarding',
+          Login: 'Login',
+          Register: 'Register',
         }
       },
       Root: {
         screens: {
-          TabOne: {
-            screens: {
-              TabOneScreen: 'one',
-            },
-          },
-          TabTwo: {
-            screens: {
-              TabTwoScreen: 'two',
-            },
-          },
+          Profile: 'Profile',
+          Messages: 'Messages',
+          Moments: 'Moments',
+          Settings: 'Settings',
         },
       },
       Modal: 'modal',
