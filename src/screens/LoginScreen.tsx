@@ -27,14 +27,14 @@ import { AppContext } from '../context/AppProvider';
 
 
 const LoginScreen = ({ navigation }) => {
-  const { auth, dispatch, walletAddress, setWalletAddress } = useContext(AppContext);
+  const { dispatch, currentWalletAddress, setCurrentWalletAddress } = useContext(AppContext);
   const connector = useWalletConnect();
 
 
-  const Login = async (addressInput: string) => {
-    if (walletAddress.length >  40) {
-      console.log(`Wallet Auth Input: ${walletAddress}`)
-      dispatch({ type: "LOGINWEB3" })
+  const Login = (addressInput: string) => {
+    if (currentWalletAddress.length > 40) {
+      console.log(`Wallet Auth Input: ${currentWalletAddress}`)
+      dispatch({ type: "LOGIN" })
     } else {
       Alert.alert('Please enter a valid wallet address or continue as guest <3')
     }
@@ -87,13 +87,13 @@ const LoginScreen = ({ navigation }) => {
             size={20}
             color="#666"
             style={{ marginRight: 5 }} />}
-          onChangeText={(address: any) => setWalletAddress(address)}
+          onChangeText={(address: any) => setCurrentWalletAddress(address)}
           inputType="wallet"
           fieldButtonLabel={"Wallet Connect"}
           fieldButtonFunction={connectWallet}
           keyboardType={undefined} />
 
-        <CustomButton label={"Login"} onPress={() => Login(walletAddress)} />
+        <CustomButton label={"Login"} onPress={() => Login(currentWalletAddress)} />
 
         <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>
           Or, login with ...

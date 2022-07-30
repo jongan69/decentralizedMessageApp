@@ -8,7 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import useCachedResources from './src/hooks/useCachedResources';
 import useColorScheme from './src/hooks/useColorScheme';
 import Navigation from './src/navigation';
-import { LogBox, Platform } from "react-native";
+import { LogBox, Platform, ActivityIndicator } from "react-native";
 import { AppProvider } from './src/context/AppProvider';
 import WalletConnectProvider from "@walletconnect/react-native-dapp";
 
@@ -18,28 +18,27 @@ const SCHEME_FROM_APP_JSON = 'demo'
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
-  
 
-  if (!isLoadingComplete) {
-    return null;
-  } else {
-    return (
-      <AppProvider>
+  return (
+    <AppProvider>
+      {!isLoadingComplete
+        ? <ActivityIndicator />
+        :
         <SafeAreaProvider>
-        <WalletConnectProvider
-          redirectUrl={
-            Platform.OS === "web"
-              ? window.location.origin
-              : `${SCHEME_FROM_APP_JSON}://`
-          }
-          storageOptions={{
-            asyncStorage: AsyncStorage,
-          }}>
-          <Navigation colorScheme={colorScheme }/>
-          <StatusBar />
+          <WalletConnectProvider
+            redirectUrl={
+              Platform.OS === "web"
+                ? window.location.origin
+                : `${SCHEME_FROM_APP_JSON}://`
+            }
+            storageOptions={{
+              asyncStorage: AsyncStorage,
+            }}>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
           </WalletConnectProvider>
-          </SafeAreaProvider>
-      </AppProvider>
-    );
-  }
+        </SafeAreaProvider>
+      }
+    </AppProvider>
+  );
 }

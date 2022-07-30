@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -14,19 +14,12 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { AppContext } from '../context/AppProvider';
-import { useWalletConnect } from "@walletconnect/react-native-dapp";
 
 const CustomDrawer = props => {
-  const connector = useWalletConnect();
-  const { auth, dispatch } = React.useContext(AppContext);
+  const { auth, dispatch } = useContext(AppContext);
 
-  const killSession = React.useCallback(() => {
-    return connector.killSession();
-}, [connector]);
-
-  const Logout = () => {
-    killSession();
-    dispatch({ type: "LOGOUT" })
+  const logout = () => {
+    dispatch({ type: "LOGOUT"})
   }
 
   return (
@@ -105,7 +98,11 @@ const CustomDrawer = props => {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => Logout()} style={{ paddingVertical: 15 }}>
+        <TouchableOpacity
+        onPress={() => {
+            return logout();
+          }} 
+        style={{ paddingVertical: 15 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Ionicons name="exit-outline" size={22} />
             <Text
