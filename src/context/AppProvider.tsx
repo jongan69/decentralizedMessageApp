@@ -6,29 +6,66 @@ interface AppContextInterface {
     authenticationError: string;
     hasHardware: boolean | undefined;
     dispatch: any
-  }
+}
 
 export const AppContext = createContext<AppContextInterface | any>({});
 
 const intiialAuth = {
-    authenticated: false
+    authenticated: false,
+    authenticationError: "n/a",
+    hasHardware: undefined,
 }
 
+const authenticate = (state: any) => {
+    console.log(`Face ID Doesnt work on Expo Go`)
+    // const localAuth = await LocalAuthentication.authenticateAsync({
+    //     promptMessage: "Authentication message",
+    // });
+
+    // if (localAuth.success) {
+    //     return {
+    //         authenticated: true,
+    //         authenticationError: "None",
+    //         hasHardware: await LocalAuthentication.hasHardwareAsync()
+    //     }
+    // } else {
+    //     return {
+    //         authenticated: true,
+    //         authenticationError: localAuth.error,
+    //         hasHardware: await LocalAuthentication.hasHardwareAsync()
+    //     }
+    // }
+
+    console.log(`Authenticating: ${JSON.stringify(state)}`)            
+    return {
+        authenticated: true,
+        authenticationError: "Face ID Doesnt work on Expo Go",
+        hasHardware: undefined
+    }
+}
 
 const reducer = (state: any, action: any) => {
     switch (action.type) {
         case "LOGIN":
-            console.log("authenticated: ", state)
-            if(state.authenticated === true){
+            console.log("authenticate object state: ", state)
+            if (state.authenticated) {
                 console.log(`User is Logged in already`)
-                return { authenticated: false}
+                return {
+                    authenticated: true,
+                    authenticationError: "None",
+                    hasHardware: undefined
+                }
             } else {
-                console.log(`User isn't Logged in, fire face id`)
-                return { authenticated: true}
+                return authenticate(state);
             }
+
         case "LOGOUT": {
             console.log(`Logging User Out`)
-            return { authenticated: false}
+            return {
+                authenticated: false,
+                authenticationError: "None",
+                hasHardware: undefined
+            }
         }
         // case "REGISTER":
         //     console.log('User Sign Up')
@@ -38,28 +75,14 @@ const reducer = (state: any, action: any) => {
     }
 };
 
-const authenticate = async () => {
-    const authenticated = await LocalAuthentication.authenticateAsync({
-      promptMessage: "Authentication message",
-    });
-  
-    if (authenticated.success) {
-          //   setState({
-          //     authenticationError: "None",
-          //   });
-          // } else {
-          //   setState({
-          //     authenticationError: authenticated.error,
-          //   });
-          }
-  }
+
 
 export const AppProvider = (props: { children: ReactElement }) => {
     const [auth, dispatch] = useReducer(reducer, intiialAuth)
     return (
-    <AppContext.Provider value={{ auth, dispatch}}>
-        {props.children}
-    </AppContext.Provider>
+        <AppContext.Provider value={{ auth, dispatch }}>
+            {props.children}
+        </AppContext.Provider>
     )
 };
 
