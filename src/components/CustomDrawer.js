@@ -37,7 +37,7 @@ const CustomDrawer = props => {
         <ImageBackground
           source={require('../assets/images/menu-bg.jpeg')}
           style={{ padding: 20 }}>
-          {auth.profileImageUrl
+          {auth.profileImageUrl === "No Profile Pic"
             ?
             <Image
               source={require('../assets/images/user-profile.jpg')}

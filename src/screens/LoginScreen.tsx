@@ -87,8 +87,7 @@ const LoginScreen = ({ navigation }) => {
             size={20}
             color="#666"
             style={{ marginRight: 5 }} />}
-          // value={addressInput}
-          onChangeText={address => setWalletAddress(address)}
+          onChangeText={(address: any) => setWalletAddress(address)}
           inputType="wallet"
           fieldButtonLabel={"Wallet Connect"}
           fieldButtonFunction={connectWallet}

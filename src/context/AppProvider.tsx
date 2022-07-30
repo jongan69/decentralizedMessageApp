@@ -70,18 +70,18 @@ const authenticate = (state: any) => {
 
 
     // onSuccess do this
-    return {
-        authenticated: true,
-        authenticationError: "Skipped Any Auth for now...",
-        hasHardware: undefined,
-        userName: "Fake User",
-        walletAddress: "0x814404E8D0e0d64110b8380A296767415F447f60",
-        walletBalance: 42069,
-        profileImageUrl: "https://avatars.githubusercontent.com/u/29899042?v=4",
-        headerBackground: "Default Background",
-        favoriteColor: "unknown",
-        loginMethod: "null"
-    }
+    // return {
+    //     authenticated: true,
+    //     authenticationError: "Skipped Any Auth for now...",
+    //     hasHardware: undefined,
+    //     userName: "Fake User",
+    //     walletAddress: "0x814404E8D0e0d64110b8380A296767415F447f60",
+    //     walletBalance: 42069,
+    //     profileImageUrl: "https://avatars.githubusercontent.com/u/29899042?v=4",
+    //     headerBackground: "Default Background",
+    //     favoriteColor: "unknown",
+    //     loginMethod: "null"
+    // }
 }
 
 
@@ -101,7 +101,7 @@ export const AppProvider = (props: { children: ReactElement }) => {
                     console.log(`Logging User In`);
                     return authenticate(state);
                 }
-    
+
             case "LOGINWEB3":
                 return {
                     authenticated: true,
@@ -115,7 +115,7 @@ export const AppProvider = (props: { children: ReactElement }) => {
                     favoriteColor: "unknown",
                     loginMethod: "WC"
                 }
-    
+
             case "LOGOUT": {
                 console.log(`Logging User Out`);
                 return {
@@ -130,7 +130,7 @@ export const AppProvider = (props: { children: ReactElement }) => {
                     loginMethod: "null"
                 }
             }
-    
+
             case "REGISTER":
                 console.log('User wants to Sign Up')
                 return;

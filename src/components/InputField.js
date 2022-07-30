@@ -26,7 +26,7 @@ export default function InputField({
           keyboardType={keyboardType}
           style={{flex: 1, paddingVertical: 0}}
           secureTextEntry={true}
-          // onChangeText={onChangeText}
+          onChangeText={onChangeText}
         />
       ) : (
         <TextInput
