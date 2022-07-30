@@ -5,10 +5,10 @@ import CustomDrawer from '../components/CustomDrawer';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import ProfileScreen from '../../../crypto-nft-marketplace-expo/src/screens/ProfileScreen';
-import MessagesScreen from '../../../crypto-nft-marketplace-expo/src/screens/MessagesScreen';
-import MomentsScreen from '../../../crypto-nft-marketplace-expo/src/screens/MomentsScreen';
-import SettingsScreen from '../../../crypto-nft-marketplace-expo/src/screens/SettingsScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import MessagesScreen from '../screens/MessagesScreen';
+import MomentsScreen from '../screens/MomentsScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 
 import TabNavigator from './TabNavigator';
 

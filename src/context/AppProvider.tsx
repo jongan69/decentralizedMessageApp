@@ -1,34 +1,58 @@
 import React, { createContext, useReducer, ReactElement } from 'react'
+import * as LocalAuthentication from 'expo-local-authentication';
 
 interface AppContextInterface {
-    auth: false,
+    authenticated: boolean;
+    authenticationError: string;
+    hasHardware: boolean | undefined;
     dispatch: any
   }
 
 export const AppContext = createContext<AppContextInterface | any>({});
 
 const intiialAuth = {
-    userLoggedIn: false
+    authenticated: false
 }
-
-
 
 
 const reducer = (state: any, action: any) => {
     switch (action.type) {
         case "LOGIN":
-            console.log("LOGIN: ", state)
-            if(state.userLoggedIn){
-                return { userLoggedIn: false}
+            console.log("authenticated: ", state)
+            if(state.authenticated === true){
+                console.log(`User is Logged in already`)
+                return { authenticated: false}
             } else {
-                return { userLoggedIn: true}
+                console.log(`User isn't Logged in, fire face id`)
+                return { authenticated: true}
             }
-        case "SIGNUP":
-            return { userLoggedIn: false}
+        case "LOGOUT": {
+            console.log(`Logging User Out`)
+            return { authenticated: false}
+        }
+        // case "REGISTER":
+        //     console.log('User Sign Up')
+        //     return { authenticated: true}
         default:
             return state;
     }
 };
+
+const authenticate = async () => {
+    const authenticated = await LocalAuthentication.authenticateAsync({
+      promptMessage: "Authentication message",
+    });
+  
+    if (authenticated.success) {
+          //   setState({
+          //     authenticationError: "None",
+          //   });
+          // } else {
+          //   setState({
+          //     authenticationError: authenticated.error,
+          //   });
+          }
+  }
 
 export const AppProvider = (props: { children: ReactElement }) => {
     const [auth, dispatch] = useReducer(reducer, intiialAuth)

@@ -12,6 +12,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   const { auth, dispatch } = useContext(AppContext);
 
   const Login = () => {
+    console.log("auth is ", auth.authenticated);
     dispatch({ type: "LOGIN"})
   }
   
@@ -20,7 +21,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
       <Text style={styles.title}>Tab One</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Button func={Login}>
-      <Text style={styles.title}>Logged in {auth.userLoggedIn.toString()}</Text>
+      <Text style={styles.title}>Logged in {auth.authenticated.toString()}</Text>
       </Button>
       {/* <EditScreenInfo path="/screens/TabOneScreen.tsx" /> */}
     </View>

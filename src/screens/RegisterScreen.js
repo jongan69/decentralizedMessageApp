@@ -8,23 +8,23 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import DatePicker from 'react-native-date-picker';
+// import DatePicker from 'react-native-date-picker';
 
 import InputField from '../components/InputField';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import RegistrationSVG from '../assets/images/misc/registration.svg';
-import GoogleSVG from '../assets/images/misc/google.svg';
-import FacebookSVG from '../assets/images/misc/facebook.svg';
-import TwitterSVG from '../assets/images/misc/twitter.svg';
-import CustomButton from '../components/CustomButton';
+// import RegistrationSVG from '../assets/images/misc/registration.svg';
+// import GoogleSVG from '../assets/images/misc/google.svg';
+// import FacebookSVG from '../assets/images/misc/facebook.svg';
+// import TwitterSVG from '../assets/images/misc/twitter.svg';
+// import CustomButton from '../components/CustomButton';
 
 const RegisterScreen = ({navigation}) => {
-  const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
-  const [dobLabel, setDobLabel] = useState('Date of Birth');
+  // const [date, setDate] = useState(new Date());
+  // const [open, setOpen] = useState(false);
+  // const [dobLabel, setDobLabel] = useState('Date of Birth');
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
@@ -32,11 +32,11 @@ const RegisterScreen = ({navigation}) => {
         showsVerticalScrollIndicator={false}
         style={{paddingHorizontal: 25}}>
         <View style={{alignItems: 'center'}}>
-          <RegistrationSVG
+          {/* <RegistrationSVG
             height={300}
             width={300}
             style={{transform: [{rotate: '-5deg'}]}}
-          />
+          /> */}
         </View>
 
         <Text
@@ -65,7 +65,7 @@ const RegisterScreen = ({navigation}) => {
               paddingHorizontal: 30,
               paddingVertical: 10,
             }}>
-            <GoogleSVG height={24} width={24} />
+            {/* <GoogleSVG height={24} width={24} /> */}
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {}}
@@ -76,7 +76,7 @@ const RegisterScreen = ({navigation}) => {
               paddingHorizontal: 30,
               paddingVertical: 10,
             }}>
-            <FacebookSVG height={24} width={24} />
+            {/* <FacebookSVG height={24} width={24} /> */}
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {}}
@@ -87,7 +87,7 @@ const RegisterScreen = ({navigation}) => {
               paddingHorizontal: 30,
               paddingVertical: 10,
             }}>
-            <TwitterSVG height={24} width={24} />
+            {/* <TwitterSVG height={24} width={24} /> */}
           </TouchableOpacity>
         </View>
 
@@ -160,14 +160,14 @@ const RegisterScreen = ({navigation}) => {
             color="#666"
             style={{marginRight: 5}}
           />
-          <TouchableOpacity onPress={() => setOpen(true)}>
+          {/* <TouchableOpacity onPress={() => setOpen(true)}>
             <Text style={{color: '#666', marginLeft: 5, marginTop: 5}}>
               {dobLabel}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
-        <DatePicker
+        {/* <DatePicker
           modal
           open={open}
           date={date}
@@ -182,9 +182,9 @@ const RegisterScreen = ({navigation}) => {
           onCancel={() => {
             setOpen(false);
           }}
-        />
+        /> */}
 
-        <CustomButton label={'Register'} onPress={() => {}} />
+        {/* <CustomButton label={'Register'} onPress={() => {}} /> */}
 
         <View
           style={{

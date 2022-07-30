@@ -2,9 +2,9 @@ import React from 'react'
 import { SafeAreaView, View, Text, TouchableOpacity } from 'react-native';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Gaming from '../assets/images/misc/gaming.svg';
+// import Gaming from '../assets/images/misc/gaming.svg';
 
-const OnboardingScreen = ({navigation}) => {
+const OnboardingScreen = ({ navigation }) => {
   return (
     <SafeAreaView
       style={{
@@ -13,7 +13,7 @@ const OnboardingScreen = ({navigation}) => {
         alignItems: 'center',
         backgroundColor: '#fff',
       }}>
-      <View style={{marginTop: 20}}>
+      <View style={{ marginTop: 20 }}>
         <Text
           style={{
             fontFamily: 'Inter-Bold',
@@ -21,15 +21,15 @@ const OnboardingScreen = ({navigation}) => {
             fontSize: 30,
             color: '#20315f',
           }}>
-          GAMEON
+          Welcome
         </Text>
       </View>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Gaming
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        {/* <Gaming
           width={300}
           height={300}
-          style={{transform: [{rotate: '-15deg'}]}}
-        />
+          style={{ transform: [{ rotate: '-15deg' }] }}
+        /> */}
       </View>
       <TouchableOpacity
         style={{
@@ -50,7 +50,7 @@ const OnboardingScreen = ({navigation}) => {
             fontWeight: 'bold',
             fontFamily: 'Roboto-MediumItalic',
           }}>
-          Let's Begin
+          Let's Get You Setup
         </Text>
         <MaterialIcons name="arrow-forward-ios" size={22} color="#fff" />
       </TouchableOpacity>

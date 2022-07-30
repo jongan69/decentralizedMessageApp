@@ -12,9 +12,11 @@ import Carousel from 'react-native-snap-carousel';
 import Feather from 'react-native-vector-icons/Feather';
 
 import BannerSlider from '../components/BannerSlider';
-import {windowWidth} from '../utils/Dimensions';
+import Layout from '../constants/Layout'
+const windowWidth = Layout.window.width;
+// import {windowWidth} from '../utils/Dimensions';
 
-import {freeGames, paidGames, sliderData} from '../model/data';
+// import {freeGames, paidGames, sliderData} from '../model/data';
 import CustomSwitch from '../components/CustomSwitch';
 import ListItem from '../components/ListItem';
 
@@ -82,7 +84,7 @@ export default function HomeScreen({navigation}) {
           </TouchableOpacity>
         </View>
 
-        <Carousel
+        {/* <Carousel
           ref={c => {
             this._carousel = c;
           }}
@@ -91,7 +93,7 @@ export default function HomeScreen({navigation}) {
           sliderWidth={windowWidth - 40}
           itemWidth={300}
           loop={true}
-        />
+        /> */}
 
         <View style={{marginVertical: 20}}>
           <CustomSwitch
@@ -102,7 +104,7 @@ export default function HomeScreen({navigation}) {
           />
         </View>
 
-        {gamesTab == 1 &&
+        {/* {gamesTab == 1 &&
           freeGames.map(item => (
             <ListItem
               key={item.id}
@@ -117,8 +119,8 @@ export default function HomeScreen({navigation}) {
                 })
               }
             />
-          ))}
-        {gamesTab == 2 &&
+          ))} */}
+        {/* {gamesTab == 2 &&
           paidGames.map(item => (
             <ListItem
               key={item.id}
@@ -134,7 +136,7 @@ export default function HomeScreen({navigation}) {
                 })
               }
             />
-          ))}
+          ))} */}
       </ScrollView>
     </SafeAreaView>
   );

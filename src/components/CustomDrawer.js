@@ -13,8 +13,14 @@ import {
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { AppContext } from '../context/AppProvider';
 
 const CustomDrawer = props => {
+  const { auth, dispatch } = React.useContext(AppContext);
+  const Logout = () => {
+    console.log("auth is ", auth.authenticated);
+    dispatch({ type: "LOGOUT"})
+  }
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView
@@ -66,7 +72,7 @@ const CustomDrawer = props => {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
+        <TouchableOpacity onPress={() => Logout()} style={{paddingVertical: 15}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Ionicons name="exit-outline" size={22} />
             <Text

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import { windowWidth } from '../utils/Dimensions';
+import Layout from '../constants/Layout'
+const windowWidth = Layout.window.width;
 
 export default function ListItem({photo, title, subTitle, isFree, price, onPress}) {
   return (
