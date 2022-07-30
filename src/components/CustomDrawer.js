@@ -17,22 +17,33 @@ import { AppContext } from '../context/AppProvider';
 
 const CustomDrawer = props => {
   const { auth, dispatch } = React.useContext(AppContext);
+
   const Logout = () => {
-    console.log("auth is ", auth.authenticated);
-    dispatch({ type: "LOGOUT"})
+    dispatch({ type: "LOGOUT" })
   }
+
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{backgroundColor: '#8200d6'}}>
+        contentContainerStyle={{ backgroundColor: '#8200d6' }}>
         <ImageBackground
           source={require('../assets/images/menu-bg.jpeg')}
-          style={{padding: 20}}>
+          style={{ padding: 20 }}>
+          { auth.authenicated 
+          ? 
           <Image
             source={require('../assets/images/user-profile.jpg')}
-            style={{height: 80, width: 80, borderRadius: 40, marginBottom: 10}}
+            style={{ height: 80, width: 80, borderRadius: 40, marginBottom: 10 }}
           />
+          :
+          <Image
+            source={{ uri: auth.profileImageUrl}}
+            style={{ height: 80, width: 80, borderRadius: 40, marginBottom: 10 }}
+          />
+          }
+         
+
           <Text
             style={{
               color: '#fff',
@@ -40,27 +51,39 @@ const CustomDrawer = props => {
               fontFamily: 'Roboto-Medium',
               marginBottom: 5,
             }}>
-            John Doe
+            {auth.userName}
           </Text>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <Text
               style={{
                 color: '#fff',
                 fontFamily: 'Roboto-Regular',
                 marginRight: 5,
               }}>
-              280 Coins
+              {auth.walletBalance}
             </Text>
             <FontAwesome5 name="coins" size={14} color="#fff" />
           </View>
+          <View style={{ flexDirection: 'row', paddingTop: 15 }}>
+            <Text
+              style={{
+                color: '#fff',
+                fontFamily: 'Roboto-Regular',
+                marginRight: 5,
+              }}>
+              {auth.walletAddress.slice(0, 6)}...{auth.walletAddress.slice(auth.walletAddress.length - 4, auth.walletAddress.length)}`
+              {/* {auth.walletAddress.slice(0, 6)} */}
+            </Text>
+            <FontAwesome5 name="wallet" size={14} color="#fff" />
+          </View>
         </ImageBackground>
-        <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>
+        <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: 10 }}>
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>
-      <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#ccc'}}>
-        <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: '#ccc' }}>
+        <TouchableOpacity onPress={() => { }} style={{ paddingVertical: 15 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Ionicons name="share-social-outline" size={22} />
             <Text
               style={{
@@ -72,8 +95,8 @@ const CustomDrawer = props => {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => Logout()} style={{paddingVertical: 15}}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <TouchableOpacity onPress={() => Logout()} style={{ paddingVertical: 15 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Ionicons name="exit-outline" size={22} />
             <Text
               style={{

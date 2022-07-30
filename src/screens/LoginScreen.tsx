@@ -26,9 +26,9 @@ import { AppContext } from '../context/AppProvider';
 const LoginScreen = ({ navigation }) => {
   const { auth, dispatch } = useContext(AppContext);
 
-  const Login = () => {
-    console.log("auth is ", auth.authenticated);
-    dispatch({ type: "LOGIN"})
+  const Login = async() => {
+    await dispatch({ type: "LOGIN"})
+    if(auth.authenticated) console.log(`Authentication Success`)            
   }
 
   return (
