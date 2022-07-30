@@ -47,7 +47,7 @@ export default function HomeScreen({navigation}) {
             Hello {auth.userName}
           </Text>
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          { auth.authenicated 
+          { auth.profileImageUrl
           ? 
           <ImageBackground
               source={require('../assets/images/user-profile.jpg')}

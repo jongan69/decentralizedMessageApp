@@ -14,11 +14,18 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { AppContext } from '../context/AppProvider';
+import { useWalletConnect } from "@walletconnect/react-native-dapp";
 
 const CustomDrawer = props => {
+  const connector = useWalletConnect();
   const { auth, dispatch } = React.useContext(AppContext);
 
+  const killSession = React.useCallback(() => {
+    return connector.killSession();
+}, [connector]);
+
   const Logout = () => {
+    killSession();
     dispatch({ type: "LOGOUT" })
   }
 
@@ -30,19 +37,18 @@ const CustomDrawer = props => {
         <ImageBackground
           source={require('../assets/images/menu-bg.jpeg')}
           style={{ padding: 20 }}>
-          { auth.authenicated 
-          ? 
-          <Image
-            source={require('../assets/images/user-profile.jpg')}
-            style={{ height: 80, width: 80, borderRadius: 40, marginBottom: 10 }}
-          />
-          :
-          <Image
-            source={{ uri: auth.profileImageUrl}}
-            style={{ height: 80, width: 80, borderRadius: 40, marginBottom: 10 }}
-          />
+          {auth.profileImageUrl
+            ?
+            <Image
+              source={require('../assets/images/user-profile.jpg')}
+              style={{ height: 80, width: 80, borderRadius: 40, marginBottom: 10 }}
+            />
+            :
+            <Image
+              source={{ uri: auth.profileImageUrl }}
+              style={{ height: 80, width: 80, borderRadius: 40, marginBottom: 10 }}
+            />
           }
-         
 
           <Text
             style={{
@@ -71,8 +77,12 @@ const CustomDrawer = props => {
                 fontFamily: 'Roboto-Regular',
                 marginRight: 5,
               }}>
-              {auth.walletAddress.slice(0, 6)}...{auth.walletAddress.slice(auth.walletAddress.length - 4, auth.walletAddress.length)}`
-              {/* {auth.walletAddress.slice(0, 6)} */}
+              {/* {connector.connected ?
+                connector.accounts[0]
+                :
+                `${auth?.walletAddress?.slice(0, 6)}...${auth?.walletAddress.slice(auth?.walletAddress?.length - 4, auth?.walletAddress?.length)}`
+              } */}
+              {auth?.walletAddress && `${auth?.walletAddress?.slice(0, 6)}...${auth?.walletAddress.slice(auth?.walletAddress?.length - 4, auth?.walletAddress?.length)}`}
             </Text>
             <FontAwesome5 name="wallet" size={14} color="#fff" />
           </View>

@@ -11,6 +11,7 @@ import * as React from 'react';
 import { ColorSchemeName, Pressable } from 'react-native';
 import AuthStack from './AuthStack';
 import AppStack from './AppStack'
+import { useWalletConnect } from "@walletconnect/react-native-dapp";
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -23,13 +24,31 @@ import LinkingConfiguration from './LinkingConfiguration';
 import { AppContext } from '../context/AppProvider';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
-  const { auth, dispatch } = React.useContext(AppContext);
+  const { auth, dispatch, walletAddress, setWalletAddress } = React.useContext(AppContext);
+  const connector = useWalletConnect();
+
+//   const killSession = React.useCallback(() => {
+//     return connector.killSession();
+// }, [connector]);
+
+  React.useEffect(() => {
+    if (connector.connected) {
+        setWalletAddress(connector.accounts[0])
+        dispatch({ type: "LOGINWEB3" })
+    }
+    // if (!connector.connected) {
+    //   killSession();
+    //   dispatch({ type: "LOGOUT" })
+    //   console.log(`Wallet Auth Error: ${JSON.stringify(auth.walletAddress)}`)
+    // }
+}, [connector])
+
 
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      {auth.authenticated === true ?
+      {auth && auth.authenticated && auth.authenticated !== undefined ?
         <AppStack />
         :
         <AuthStack />
