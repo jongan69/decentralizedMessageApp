@@ -1,46 +1,63 @@
 
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
-import React, { useEffect, useContext, useCallback } from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { View } from '../components/Themed';
+import LinkingConfiguration from './LinkingConfiguration';
+
+import { ColorSchemeName, StyleSheet, ActivityIndicator } from 'react-native';
+import { AppContext } from '../context/AppProvider';
 import AuthStack from './AuthStack';
 import AppStack from './AppStack'
+import { RootState } from '../context/store';
+import { useSelector } from 'react-redux';
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import LinkingConfiguration from './LinkingConfiguration';
-import loginHook from '../hooks/loginHook';
-import { useWalletConnect } from "@walletconnect/react-native-dapp";
-import { AppContext } from '../context/AppProvider';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
-  const { auth, dispatch, currentWalletAddress, setCurrentWalletAddress } = useContext(AppContext);
-  const connector = useWalletConnect();
-
-  const syncAuths = async () => {
-    if(connector.connected && connector.accounts[0] !== currentWalletAddress){
-      setCurrentWalletAddress(connector.accounts[0])
-    } 
-    
-    if(!auth.authenticated && currentWalletAddress.length > 40){
-      dispatch({ type: "LOGIN" })
-    }
-  }
+  const { currentWalletAddress, setCurrentWalletAddress } = useContext(AppContext);
+  const loading = useSelector((state: RootState) => state.wallet.loading);
+  const wallet = useSelector((state: RootState) => state.wallet.walletAddress);
 
   useEffect(() => {
-    syncAuths();
-  },[currentWalletAddress, connector])
-  
+    if(wallet){
+      console.log('Wallet found in store, update user data from DB')
+      setCurrentWalletAddress(wallet)
+      console.log('Updated global wallet state from store to', currentWalletAddress)
+    } else {
+      console.log('No wallet to restore: ', currentWalletAddress)
+    }
+  }, [wallet, currentWalletAddress]);
 
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      {auth.authenticated
-      ?
-        <AppStack />
+      {loading
+        ?
+        <View style={[styles.container, styles.horizontal]}>
+          <ActivityIndicator />
+        </View>
         :
-        <AuthStack />
+        <>
+          {wallet
+            ?
+            <AppStack />
+            :
+            <AuthStack />
+          }
+        </>
       }
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center"
+  },
+  horizontal: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10
+  }
+});

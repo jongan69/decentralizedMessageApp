@@ -2,35 +2,18 @@ import { FontAwesome } from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
-import { ReadItem } from '../lib/AsyncStorageFunctions'
-import loginHook from '../hooks/loginHook';
+// import * as reducerFunctions from '../context/reducerFunctions'
 
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
-  const [storedWalletAddress, setStoredWalletAddress] = useState<string>("")
 
   // Load any resources or data that we need prior to rendering the app
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
         SplashScreen.preventAutoHideAsync();
+        // reducerFunctions.CheckLoggedinSequence();
 
-        // Check for Wallet Address
-        await ReadItem("walletAddress")
-          .then((res) => {
-            if (res !== null && res.length > 40) {
-              // Restore session if found wallet in async
-              setStoredWalletAddress(res)
-            } else {
-              console.warn("no wallet address found");
-            }
-          })
-          .catch((e) => console.warn(e));
-
-          if(storedWalletAddress){
-            console.log("trying to restore session", storedWalletAddress);
-            // loginHook(storedWalletAddress)
-          }
         // Load fonts
         await Font.loadAsync({
           ...FontAwesome.font,

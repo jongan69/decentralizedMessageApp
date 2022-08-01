@@ -1,5 +1,5 @@
 {
-  "name": "decentralizedmessageapp",
+  "name": "rn-auth-demo",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -20,6 +20,7 @@
     "@react-navigation/drawer": "^6.4.3",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
+    "@reduxjs/toolkit": "^1.8.3",
     "@walletconnect/react-native-dapp": "^1.7.8",
     "buffer": "^6.0.3",
     "expo": "~45.0.0",
@@ -46,7 +47,10 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "9.6.4",
     "react-native-svg-transformer": "^1.0.0",
-    "react-native-web": "0.17.7"
+    "react-native-web": "0.17.7",
+    "react-redux": "^8.0.2",
+    "redux-persist": "^6.0.0",
+    "use-reducer-async": "^2.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

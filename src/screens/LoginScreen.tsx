@@ -1,4 +1,4 @@
-import React, { Component, useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -9,13 +9,13 @@ import {
 } from 'react-native';
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import LoginSVG from '../assets/images/misc/login.svg';
 import AppleSVG from '../assets/images/misc/apple.svg';
 import GoogleSVG from '../assets/images/misc/google.svg';
 import CoinbaseSVG from '../assets/images/misc/coinbase.svg';
 import { useWalletConnect } from "@walletconnect/react-native-dapp";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setWallet } from '../context/store/wallet'
 // import FacebookSVG from '../assets/images/misc/facebook.svg';
 // import TwitterSVG from '../assets/images/misc/twitter.svg';
 
@@ -24,26 +24,39 @@ import InputField from '../components/InputField';
 import { AppContext } from '../context/AppProvider';
 
 
-
-
-const LoginScreen = ({ navigation }) => {
-  const { dispatch, currentWalletAddress, setCurrentWalletAddress } = useContext(AppContext);
+const LoginScreen = (props: { navigation: any }) => {
+  const { currentWalletAddress, setCurrentWalletAddress } = useContext(AppContext);
+  const [address, setAddress] = useState<string>("");
   const connector = useWalletConnect();
-
-
-  const Login = (addressInput: string) => {
-    if (currentWalletAddress.length > 40) {
-      console.log(`Wallet Auth Input: ${currentWalletAddress}`)
-      dispatch({ type: "LOGIN" })
-    } else {
-      Alert.alert('Please enter a valid wallet address or continue as guest <3')
-    }
-  }
+  const dispatch = useDispatch();
 
   const connectWallet = React.useCallback(() => {
     return connector.connect();
   }, [connector])
 
+  const disconnectWallet = React.useCallback(() => {
+    setAddress("");
+    connector.killSession();
+    return address
+  }, [connector])
+
+  useEffect(() => {
+    console.log('Wallet Entry is: ', address);
+    if (connector.connected && address.length < 40) {
+      setAddress(connector.accounts[0])
+    }
+  }, [connector, address])
+
+  const Login = () => {
+    console.log('Address was: ', address)
+    if (address.length > 40) {
+      console.log(`Wallet Entry ${address} was valid, call or create user in DB: `);
+      dispatch(setWallet(address))
+      setCurrentWalletAddress(address)
+    } else {
+      Alert.alert('Invalid Wallet Address', `${address} wasn't long enough`)
+    }
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
@@ -55,7 +68,6 @@ const LoginScreen = ({ navigation }) => {
             style={{ transform: [{ rotate: '-5deg' }] }}
           />
         </View>
-
         <Text
           style={{
             fontFamily: 'Roboto-Medium',
@@ -66,20 +78,6 @@ const LoginScreen = ({ navigation }) => {
           }}>
           Login
         </Text>
-
-        {/* <InputField
-          label={'Email ID'}
-          icon={
-            <MaterialIcons
-              name="alternate-email"
-              size={20}
-              color="#666"
-              style={{ marginRight: 5 }}
-            />
-          }
-          keyboardType="email-address"
-        /> */}
-
         <InputField
           label={'Wallet Address'}
           icon={<Ionicons
@@ -87,18 +85,17 @@ const LoginScreen = ({ navigation }) => {
             size={20}
             color="#666"
             style={{ marginRight: 5 }} />}
-          onChangeText={(address: any) => setCurrentWalletAddress(address)}
+          value={address}
+          onChangeText={(value: string) => setAddress(value)}
           inputType="wallet"
-          fieldButtonLabel={"Wallet Connect"}
-          fieldButtonFunction={connectWallet}
+          fieldButtonLabel={connector.connected ? "Disconnect" : "Wallet Connect"}
+          fieldButtonFunction={connector.connected ? disconnectWallet : connectWallet}
           keyboardType={undefined} />
 
-        <CustomButton label={"Login"} onPress={() => Login(currentWalletAddress)} />
-
+        <CustomButton label={"Login"} onPress={() => { Login() }} />
         <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>
           Or, login with ...
         </Text>
-
         <View
           style={{
             flexDirection: 'row',
@@ -139,7 +136,6 @@ const LoginScreen = ({ navigation }) => {
             <CoinbaseSVG height={24} width={24} />
           </TouchableOpacity>
         </View>
-
         <View
           style={{
             flexDirection: 'row',
@@ -147,7 +143,7 @@ const LoginScreen = ({ navigation }) => {
             marginBottom: 30,
           }}>
           <Text>New to the app?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <TouchableOpacity onPress={() => { }}>
             <Text style={{ color: '#AD40AF', fontWeight: '700' }}> Continue as Guest</Text>
           </TouchableOpacity>
         </View>
