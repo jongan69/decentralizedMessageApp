@@ -7,5 +7,5 @@ This app demos usage of certain React Native Hooks and Dynamic Touch Opacity in 
 Features in AppContext.tsx:
 
 - useContext
-- useReducer
-- useMemo
+- redux-toolkit
+- redux-persist
